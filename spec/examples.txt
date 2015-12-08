@@ -1,0 +1,9 @@
+example_id                                                     | status | run_time        |
+-------------------------------------------------------------- | ------ | --------------- |
+./spec/integration/scada_db_admin_usage_spec.rb[1:1:1]         | passed | 0.02805 seconds |
+./spec/integration/scada_db_app_parameter_usage_spec.rb[1:1:1] | passed | 0.02547 seconds |
+./spec/integration/scada_db_device_usage_spec.rb[1:1:1]        | passed | 0.00564 seconds |
+./spec/integration/scada_db_log_message_usage_spec.rb[1:1:1]   | passed | 0.02466 seconds |
+./spec/integration/scada_db_log_request_usage_spec.rb[1:1:1]   | passed | 0.15646 seconds |
+./spec/integration/scada_db_mem_slot_usage_spec.rb[1:1:1]      | passed | 0.03299 seconds |
+./spec/integration/scada_db_user_usage_spec.rb[1:1:1]          | passed | 0.04429 seconds |
