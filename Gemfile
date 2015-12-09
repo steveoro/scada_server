@@ -34,6 +34,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem "scada_db", git: "https://github.com/steveoro/scada_db.git"
 gem "devise"
+gem "serialport"
+gem "rmodbus"
 
 
 group :development, :test do

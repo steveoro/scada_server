@@ -75,6 +75,10 @@ From a pre-stored DB backup:
 
     > zeus rake db:rebuild_from_dump
 
+Assuming the dump has no devices or initial data, this must be followed by a:
+
+    > zeus rake db:seed
+
 From scratch, using engine migrations:
 
     > zeus rake db:rebuild_from_scratch
