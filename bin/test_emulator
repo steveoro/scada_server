@@ -1,15 +1,10 @@
+#!/usr/bin/env ruby
 require 'rmodbus'
 
 # [Steve A., 20151209] For more info, check-out:
 #
 # - https://github.com/flipback/rmodbus
 # - https://en.wikipedia.org/wiki/Modbus
-
-port = 8502
-device_1_id = 1
-
-
-srv = ModBus::TCPServer.new( port, device_1_id )
 
 =begin
 (Excerpt from the Wiki entry)
@@ -57,11 +52,19 @@ coil #40001 is the target, it must appear as #040001.
 =end
 
 
+port = 8502
+device_1_id = 1
+
+srv = ModBus::TCPServer.new( port, device_1_id )
+
+
 # Define memory mappings and their values:
-srv.coils = [ 1, 0, 1, 1 ]
-srv.discrete_inputs = [ 1, 1, 0, 0 ]
-srv.holding_registers = [ 1, 2, 3, 4 ]
-srv.input_registers = [ 1, 2, 3, 4 ]
+                                              # Coils & discrete inputs can store only 1/0 values:
+srv.coils = [ 0, 1 ] * 10
+srv.discrete_inputs = [ 1, 1, 0, 0 ] * 10
+                                              # Registers can store only Integer values:
+srv.holding_registers = [ 9, -1, 77.2, 6.3, 0x05, 4, 3, 2, 1, 0 ] * 2
+srv.input_registers = [ -1, 25, 56, 15.4 ]
 
 # Be verbose:
 srv.debug = true
@@ -69,6 +72,7 @@ srv.audit = true
 
 # Start the server:
 srv.start
+puts "\r\nServer listening on localhost:#{device_1_id}, emulating device numb. #{ device_1_id }..."
 
 
 # Run the server for 200 secs:
@@ -77,4 +81,5 @@ srv.start
   sleep 1
 end
 
+puts "Server reached emulation timeout: stopping..."
 srv.stop

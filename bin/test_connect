@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+require 'rmodbus'
+
+# [Steve A., 20151209] For more info, check-out:
+#
+# - https://github.com/flipback/rmodbus
+# - https://en.wikipedia.org/wiki/Modbus
+
+port = 8502
+device_1_id = 1
+
+# Uncomment the actual address used for testing connections:
+device_1_ip = "127.0.0.1"
+# device_1_ip = "10.0.0.201"
+
+
+ModBus::TCPClient.connect( device_1_ip, port ) do |client|
+  client.with_slave( device_1_id ) do |slave|
+    # Be verbose:
+    slave.debug = true
+
+    # Coils:
+    coils = slave.read_coils( 0, 20 )
+    coils[0..20].each_with_index do |coil, idx|
+      puts "coil ##{idx} = #{coil.inspect}"
+    end
+
+    # Discrete inputs:
+    dinputs = slave.read_discrete_inputs( 0, 40 )
+    dinputs[0..39].each_with_index do |di, idx|
+      puts "discrete input ##{idx} = #{di.inspect}"
+    end
+
+    # Holding registers, read with a Read/Write proxy:
+    h_regs = slave.holding_registers
+    h_regs[0..19].each_with_index do |reg, idx|
+      puts "holding register ##{idx} = #{reg.inspect}"
+    end
+
+    # Write new values:
+    # h_regs[ 0..3 ] = [ 2, 0, 1, 1 ]
+    # Output the result:
+    # puts h_regs[ 0..3 ]
+
+    # Input registers:
+    in_regs = slave.read_input_registers( 0, 4 )
+    in_regs[0..3].each_with_index do |reg, idx|
+      puts "input register ##{idx} = #{reg.inspect}"
+    end
+  end
+end
